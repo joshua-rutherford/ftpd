@@ -132,7 +132,7 @@ module Ftpd
         ensure_file_system_supports :write
         path = argument
         syntax_error unless path
-        path = File.expand_path(path, @name_prefix)
+        path = PathHelper.expand_path(path, @name_prefix)
         ensure_accessible path
         ensure_exists File.dirname(path)
         contents = receive_file
@@ -146,7 +146,7 @@ module Ftpd
         ensure_logged_in
         ensure_file_system_supports :write
         path = argument || 'ftpd'
-        path = File.expand_path(path, @name_prefix)
+        path = PathHelper.expand_path(path, @name_prefix)
         path = unique_path(path)
         ensure_accessible path
         ensure_exists File.dirname(path)
@@ -162,7 +162,7 @@ module Ftpd
         ensure_file_system_supports :append
         path = argument
         syntax_error unless path
-        path = File.expand_path(path, @name_prefix)
+        path = PathHelper.expand_path(path, @name_prefix)
         ensure_accessible path
         contents = receive_file
         @file_system.append path, contents
@@ -176,7 +176,7 @@ module Ftpd
         ensure_file_system_supports :read
         path = argument
         syntax_error unless path
-        path = File.expand_path(path, @name_prefix)
+        path = PathHelper.expand_path(path, @name_prefix)
         ensure_accessible path
         ensure_exists path
         contents = @file_system.read(path)
@@ -189,7 +189,7 @@ module Ftpd
       ensure_file_system_supports :delete
       path = argument
       error "501 Path required" unless path
-      path = File.expand_path(path, @name_prefix)
+      path = PathHelper.expand_path(path, @name_prefix)
       ensure_accessible path
       ensure_exists path
       @file_system.delete path
@@ -203,7 +203,7 @@ module Ftpd
         ensure_file_system_supports :file_info
         path = argument
         path ||= '.'
-        path = File.expand_path(path, @name_prefix)
+        path = PathHelper.expand_path(path, @name_prefix)
         transmit_file(list(path), 'A')
       end
     end
@@ -214,7 +214,7 @@ module Ftpd
         ensure_file_system_supports :dir
         path = argument
         path ||= '.'
-        path = File.expand_path(path, @name_prefix)
+        path = PathHelper.expand_path(path, @name_prefix)
         transmit_file(name_list(path), 'A')
       end
     end
@@ -283,7 +283,7 @@ module Ftpd
 
     def cmd_cwd(argument)
       ensure_logged_in
-      path = File.expand_path(argument, @name_prefix)
+      path = PathHelper.expand_path(argument, @name_prefix)
       ensure_accessible path
       ensure_exists path
       ensure_directory path
@@ -296,7 +296,7 @@ module Ftpd
       syntax_error unless argument
       ensure_logged_in
       ensure_file_system_supports :mkdir
-      path = File.expand_path(argument, @name_prefix)
+      path = PathHelper.expand_path(argument, @name_prefix)
       ensure_accessible path
       ensure_exists File.dirname(path)
       ensure_directory File.dirname(path)
@@ -310,7 +310,7 @@ module Ftpd
       syntax_error unless argument
       ensure_logged_in
       ensure_file_system_supports :rmdir
-      path = File.expand_path(argument, @name_prefix)
+      path = PathHelper.expand_path(argument, @name_prefix)
       ensure_accessible path
       ensure_exists path
       ensure_directory path
@@ -423,7 +423,7 @@ module Ftpd
       ensure_logged_in
       ensure_file_system_supports :rename
       syntax_error unless argument
-      from_path = File.expand_path(argument, @name_prefix)
+      from_path = PathHelper.expand_path(argument, @name_prefix)
       ensure_accessible from_path
       ensure_exists from_path
       @rename_from_path = from_path
@@ -435,7 +435,7 @@ module Ftpd
       ensure_logged_in
       ensure_file_system_supports :rename
       syntax_error unless argument
-      to_path = File.expand_path(argument, @name_prefix)
+      to_path = PathHelper.expand_path(argument, @name_prefix)
       ensure_accessible to_path
       ensure_does_not_exist to_path
       @file_system.rename(@rename_from_path, to_path)

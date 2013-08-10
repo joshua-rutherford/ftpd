@@ -26,6 +26,7 @@ module Ftpd
   autoload :FtpServer,                 'ftpd/ftp_server'
   autoload :InsecureCertificate,       'ftpd/insecure_certificate'
   autoload :NullLogger,                'ftpd/null_logger'
+  autoload :PathHelper,                'ftpd/path_helper'
   autoload :ReadOnlyDiskFileSystem,    'ftpd/read_only_disk_file_system'
   autoload :Server,                    'ftpd/server'
   autoload :Session,                   'ftpd/session'
