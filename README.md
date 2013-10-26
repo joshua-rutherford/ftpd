@@ -333,6 +333,7 @@ Among those who have improved ftpd are:
 * David S. Anderson
 * Larry. W. Cashdollar
 * Michael de Silva
+* m0x
 
 Thank you!
 
